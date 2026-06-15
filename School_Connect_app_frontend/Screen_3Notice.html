@@ -1,0 +1,275 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Notices</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#09131f,#0d1b2a,#13243d);
+}
+
+.phone{
+
+width:370px;
+height:760px;
+
+background:rgba(255,255,255,0.05);
+
+backdrop-filter:blur(15px);
+
+border-radius:35px;
+
+padding:20px;
+
+color:white;
+
+overflow:hidden;
+
+box-shadow:0 0 30px rgba(0,0,0,0.5);
+
+}
+
+.header{
+
+background:linear-gradient(135deg,#ff8c00,#ffb347);
+
+padding:18px;
+
+border-radius:18px;
+
+color:black;
+
+margin-bottom:20px;
+
+animation:slideDown .8s ease;
+}
+
+.header h2{
+font-size:24px;
+}
+
+.notice-list{
+
+height:560px;
+
+overflow-y:auto;
+
+padding-right:5px;
+
+}
+
+.notice{
+
+background:rgba(255,255,255,0.08);
+
+padding:18px;
+
+border-radius:18px;
+
+margin-bottom:15px;
+
+transition:.3s;
+
+animation:fadeUp .8s ease;
+}
+
+.notice:hover{
+
+transform:translateY(-5px);
+
+background:rgba(255,255,255,0.15);
+}
+
+.notice h3{
+
+color:#ffb347;
+
+margin-bottom:8px;
+}
+
+.notice p{
+
+font-size:14px;
+
+color:#ddd;
+
+line-height:1.5;
+}
+
+.date{
+
+margin-top:10px;
+
+font-size:12px;
+
+color:#aaa;
+}
+
+.bottom-nav{
+
+position:absolute;
+
+bottom:20px;
+
+left:50%;
+
+transform:translateX(-50%);
+
+width:320px;
+
+display:flex;
+
+justify-content:space-around;
+
+padding:15px;
+
+border-radius:20px;
+
+background:rgba(255,255,255,0.08);
+}
+
+.bottom-nav div{
+
+font-size:24px;
+
+cursor:pointer;
+}
+
+@keyframes slideDown{
+
+from{
+opacity:0;
+transform:translateY(-20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+@keyframes fadeUp{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="header">
+
+<h2>📢 School Notices</h2>
+
+</div>
+
+<div class="notice-list">
+
+<div class="notice">
+
+<h3>Annual Function 2026</h3>
+
+<p>
+Annual Function will be held on 25th June.
+All students are requested to participate.
+</p>
+
+<div class="date">
+20 June 2026
+</div>
+
+</div>
+
+<div class="notice">
+
+<h3>PTM Meeting</h3>
+
+<p>
+Parent Teacher Meeting will be conducted this Sunday.
+Parents are requested to attend.
+</p>
+
+<div class="date">
+18 June 2026
+</div>
+
+</div>
+
+<div class="notice">
+
+<h3>Summer Vacation Notice</h3>
+
+<p>
+School will remain closed from 1st July to 15th July.
+</p>
+
+<div class="date">
+15 June 2026
+</div>
+
+</div>
+
+<div class="notice">
+
+<h3>Science Exhibition</h3>
+
+<p>
+Students interested in participating can register
+through their class teachers.
+</p>
+
+<div class="date">
+10 June 2026
+</div>
+
+</div>
+
+</div>
+
+<div class="bottom-nav">
+
+<div onclick="location.href='dashboard.html'">🏠</div>
+
+<div>📢</div>
+
+<div onclick="location.href='notes.html'">📚</div>
+
+<div onclick="location.href='profile.html'">👤</div>
+
+</div>
+
+</div>
+
+</body>
+
+</html>
