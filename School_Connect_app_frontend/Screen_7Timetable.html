@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timetable</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#09131f,#0d1b2a,#13243d);
+}
+
+.phone{
+width:370px;
+height:760px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(15px);
+border-radius:35px;
+padding:20px;
+color:white;
+position:relative;
+overflow:hidden;
+box-shadow:0 0 30px rgba(0,0,0,.5);
+}
+
+.header{
+background:linear-gradient(135deg,#ff8c00,#ffb347);
+padding:18px;
+border-radius:20px;
+color:black;
+animation:slideDown .8s ease;
+}
+
+.day{
+margin-top:15px;
+background:rgba(255,255,255,.08);
+padding:15px;
+border-radius:15px;
+text-align:center;
+font-weight:bold;
+color:#ffb347;
+}
+
+.schedule{
+margin-top:15px;
+height:500px;
+overflow-y:auto;
+}
+
+.period{
+background:rgba(255,255,255,.08);
+padding:15px;
+border-radius:18px;
+margin-bottom:12px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+transition:.3s;
+animation:fadeUp .8s ease;
+}
+
+.period:hover{
+transform:translateY(-5px);
+background:rgba(255,255,255,.15);
+}
+
+.subject{
+font-weight:bold;
+font-size:17px;
+}
+
+.time{
+color:#ffb347;
+}
+
+.bottom-nav{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+width:320px;
+display:flex;
+justify-content:space-around;
+padding:15px;
+border-radius:20px;
+background:rgba(255,255,255,.08);
+}
+
+.bottom-nav div{
+font-size:24px;
+cursor:pointer;
+transition:.3s;
+}
+
+.bottom-nav div:hover{
+transform:scale(1.2);
+}
+
+@keyframes slideDown{
+from{opacity:0;transform:translateY(-20px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(25px);}
+to{opacity:1;transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="header">
+<h2>📅 Today's Timetable</h2>
+<p>Class 12 Science</p>
+</div>
+
+<div class="day">Monday</div>
+
+<div class="schedule">
+
+<div class="period">
+<div>
+<div class="subject">📐 Mathematics</div>
+</div>
+<div class="time">08:00</div>
+</div>
+
+<div class="period">
+<div>
+<div class="subject">⚛ Physics</div>
+</div>
+<div class="time">09:00</div>
+</div>
+
+<div class="period">
+<div>
+<div class="subject">🧪 Chemistry</div>
+</div>
+<div class="time">10:00</div>
+</div>
+
+<div class="period">
+<div>
+<div class="subject">📖 English</div>
+</div>
+<div class="time">11:00</div>
+</div>
+
+<div class="period">
+<div>
+<div class="subject">📖 Hindi</div>
+</div>
+<div class="time">12:00</div>
+</div>
+
+</div>
+
+<div class="bottom-nav">
+<div onclick="location.href='dashboard.html'">🏠</div>
+<div onclick="location.href='notices.html'">📢</div>
+<div onclick="location.href='notes.html'">📚</div>
+<div>📅</div>
+</div>
+
+</div>
+
+</body>
+</html>
