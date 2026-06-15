@@ -1,0 +1,112 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#09131f,#0d1b2a,#13243d);
+overflow:hidden;
+}
+
+.phone{
+width:370px;
+height:760px;
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(15px);
+border-radius:35px;
+padding:20px;
+color:white;
+position:relative;
+overflow-y:auto;
+scroll-behavior:smooth;
+box-shadow:0 0 30px rgba(0,0,0,.5);
+animation:fadeIn .8s ease;
+}
+
+.phone::-webkit-scrollbar{
+display:none;
+}
+
+.header{
+background:linear-gradient(135deg,#ff8c00,#ffb347);
+padding:18px;
+border-radius:20px;
+color:black;
+margin-bottom:20px;
+animation:slideDown .8s ease;
+}
+
+.card{
+background:rgba(255,255,255,.08);
+padding:18px;
+border-radius:18px;
+margin-bottom:15px;
+transition:.3s;
+animation:fadeUp .8s ease;
+}
+
+.card:hover{
+transform:translateY(-5px);
+background:rgba(255,255,255,.15);
+}
+
+.bottom-nav{
+position:sticky;
+bottom:0;
+display:flex;
+justify-content:space-around;
+padding:15px;
+border-radius:20px;
+background:rgba(255,255,255,.08);
+backdrop-filter:blur(10px);
+margin-top:20px;
+}
+
+.bottom-nav div{
+font-size:24px;
+cursor:pointer;
+transition:.3s;
+}
+
+.bottom-nav div:hover{
+transform:scale(1.2);
+}
+
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(30px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes slideDown{
+from{
+opacity:0;
+transform:translateY(-20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
