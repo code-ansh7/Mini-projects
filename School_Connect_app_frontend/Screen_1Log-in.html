@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Connect - Login</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ff8c00, #ffb347);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 50px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .school-name {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .school-name h1 {
+            color: #ffb347;
+        }
+
+        .school-name p {
+            color: #ccc;
+            margin-top: 5px;
+        }
+
+        .form {
+            margin-top: 40px;
+        }
+
+        .input-box {
+            margin-bottom: 15px;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            outline: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            color: white;
+            font-size: 15px;
+        }
+
+        .input-box input::placeholder {
+            color: #bbb;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ff8c00, #ffb347);
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .login-btn:hover {
+            transform: scale(1.03);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #aaa;
+        }
+
+        @keyframes float {
+
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="phone">
+        <!-- Logo -->
+        <div class="logo">
+            🎓
+        </div>
+
+        <!-- School Name -->
+        <div class="school-name">
+            <h1>Saraswati Vidya Mandir</h1>
+            <p>Tilhar, Shahjahanpur</p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="form">
+
+            <div class="input-box">
+                <input type="text" id="nameInput" placeholder="Enter Student Name">
+            </div>
+
+            <div class="input-box">
+                <input type="tel" id="mobileInput" placeholder="Enter Mobile Number of Your Parents">
+            </div>
+
+            <div class="input-box">
+                <input type="password" id="passwordInput" placeholder="Password">
+            </div>
+
+            <button class="login-btn" onclick="login()">
+                Login...
+            </button>
+        </div>
+
+        <div class="footer">
+            School Connect v1.0 🚀
+        </div>
+    </div>
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getFirestore,
+            collection,
+            addDoc
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+        const firebaseConfig = {
+            apiKey: "AIzaSyCLIIBk4nE-vr7TXAnvTkhs9yrInggNa7Y",
+            authDomain: "school-app-d0f94.firebaseapp.com",
+            projectId: "school-app-d0f94",
+            storageBucket: "school-app-d0f94.firebasestorage.app",
+            messagingSenderId: "304035462797",
+            appId: "1:304035462797:web:67f3090173ecea3fdc2cc4",
+            measurementId: "G-SBN6CC1JM4"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        window.login = async function () {
+            let name =
+                document.getElementById("nameInput").value;
+
+            let mobile =
+                document.getElementById("mobileInput").value;
+
+            let password =
+                document.getElementById("passwordInput").value;
+
+            if (name.trim() === "") {
+                alert("Enter Name");
+                return;
+            }
+
+            if (mobile.length !== 10) {
+                alert("Enter Valid Mobile Number");
+                return;
+            }
+            try {
+                await addDoc(
+                    collection(db, "students"),
+                    {
+                        name: name,
+                        mobile: mobile,
+                        class: "B.Tech (CSE)"
+                    }
+                );
+                localStorage.setItem("studentName", name);
+                localStorage.setItem("studentMobile", mobile);
+                localStorage.setItem("studentPassword", password);
+
+                alert("Data Saved Successfully 🚀");
+
+                window.location.href = "Screen_2Dashboard.html";
+            }
+            catch (error) {
+                console.error(error);
+                alert("Firebase Error");
+            }
+        }
+    </script>
+</body>
+
+</html>
