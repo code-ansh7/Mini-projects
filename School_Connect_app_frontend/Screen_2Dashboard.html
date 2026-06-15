@@ -1,0 +1,211 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .welcome-card {
+            background: linear-gradient(135deg,#ff8c00,#ffb347);
+            color: black;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            animation: slideDown .8s ease;
+        }
+
+        .welcome-card h2 {
+            font-size: 24px;
+        }
+
+        .welcome-card p {
+            margin-top: 5px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            width: 48%;
+            background: rgba(255,255,255,.08);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-box h3 {
+            color: #ffb347;
+            font-size: 26px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2,1fr);
+            gap: 15px;
+        }
+
+        .menu-card {
+            background: rgba(255,255,255,.08);
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: .3s;
+            animation: fadeUp .8s ease;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-6px);
+            background: rgba(255,255,255,.15);
+        }
+
+        .menu-card .icon {
+            font-size: 35px;
+            margin-bottom: 10px;
+        }
+
+        .menu-card h3 {
+            font-size: 16px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="phone">
+
+        <!-- Welcome Card -->
+
+        <div class="welcome-card">
+
+            <h2 id="welcomeText">
+                👋 Welcome
+            </h2>
+
+            <p>
+                Saraswati Vidya Mandir
+            </p>
+
+        </div>
+
+        <!-- Quick Stats -->
+
+        <div class="stats">
+
+            <div class="stat-box">
+                <h3>92%</h3>
+                Attendance
+            </div>
+
+            <div class="stat-box">
+                <h3>15</h3>
+                Exam Days
+            </div>
+
+        </div>
+
+        <!-- Menu Grid -->
+
+        <div class="grid">
+
+            <div class="menu-card"
+                 onclick="location.href='Screen_3Notice.html'">
+
+                <div class="icon">📢</div>
+                <h3>Notices</h3>
+
+            </div>
+
+            <div class="menu-card"
+                 onclick="location.href='Screen_4Homework.html'">
+
+                <div class="icon">📝</div>
+                <h3>Homework</h3>
+
+            </div>
+
+            <div class="menu-card"
+                 onclick="location.href='Screen_5Notes.html'">
+
+                <div class="icon">📚</div>
+                <h3>Notes</h3>
+
+            </div>
+
+            <div class="menu-card"
+                 onclick="location.href='Screen_7Timetable.html'">
+
+                <div class="icon">📅</div>
+                <h3>Timetable</h3>
+
+            </div>
+
+            <div class="menu-card"
+                 onclick="location.href='Screen_6Exams.html'">
+
+                <div class="icon">🎯</div>
+                <h3>Exams</h3>
+
+            </div>
+
+            <div class="menu-card"
+                 onclick="location.href='Screen_8Profile.html'">
+
+                <div class="icon">👤</div>
+                <h3>Profile</h3>
+
+            </div>
+
+        </div>
+
+        <!-- Bottom Navigation -->
+
+        <div class="bottom-nav">
+
+            <div>🏠</div>
+
+            <div onclick="location.href='Screen_3Notice.html'">
+                📢
+            </div>
+
+            <div onclick="location.href='Screen_5Notes.html'">
+                📚
+            </div>
+
+            <div onclick="location.href='Screen_8Profile.html'">
+                👤
+            </div>
+
+        </div>
+
+    </div>
+
+    <script>
+
+        let studentName =
+            localStorage.getItem("studentName");
+
+        if(studentName){
+
+            document.getElementById(
+                "welcomeText"
+            ).innerHTML =
+                "👋 Welcome, " + studentName;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
