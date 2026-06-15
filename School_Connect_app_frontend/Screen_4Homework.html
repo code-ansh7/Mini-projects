@@ -1,0 +1,233 @@
+ <!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Homework</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',sans-serif;
+}
+
+body{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#09131f,#0d1b2a,#13243d);
+}
+
+.phone{
+width:370px;
+height:760px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(15px);
+border-radius:35px;
+padding:20px;
+color:white;
+overflow:hidden;
+position:relative;
+box-shadow:0 0 30px rgba(0,0,0,0.5);
+}
+
+.header{
+background:linear-gradient(135deg,#ff8c00,#ffb347);
+padding:18px;
+border-radius:20px;
+color:black;
+animation:slideDown .8s ease;
+}
+
+.progress-card{
+margin-top:15px;
+background:rgba(255,255,255,0.08);
+padding:15px;
+border-radius:18px;
+}
+
+.progress-bar{
+height:12px;
+background:#1c304d;
+border-radius:10px;
+margin-top:10px;
+overflow:hidden;
+}
+
+.progress{
+height:100%;
+width:75%;
+background:linear-gradient(90deg,#00ff99,#00d4ff);
+border-radius:10px;
+animation:fillBar 2s ease;
+}
+
+.homework-list{
+margin-top:15px;
+height:470px;
+overflow-y:auto;
+}
+
+.card{
+background:rgba(255,255,255,0.08);
+padding:18px;
+border-radius:18px;
+margin-bottom:15px;
+transition:.3s;
+animation:fadeUp .8s ease;
+}
+
+.card:hover{
+transform:translateY(-6px);
+background:rgba(255,255,255,0.15);
+}
+
+.subject{
+font-size:18px;
+font-weight:bold;
+color:#ffb347;
+}
+
+.status{
+margin-top:8px;
+display:inline-block;
+padding:5px 12px;
+border-radius:20px;
+font-size:12px;
+}
+
+.pending{
+background:#ff4444;
+}
+
+.completed{
+background:#00c853;
+}
+
+.bottom-nav{
+position:absolute;
+bottom:20px;
+left:50%;
+transform:translateX(-50%);
+width:320px;
+display:flex;
+justify-content:space-around;
+padding:15px;
+border-radius:20px;
+background:rgba(255,255,255,0.08);
+}
+
+.bottom-nav div{
+font-size:24px;
+cursor:pointer;
+transition:.3s;
+}
+
+.bottom-nav div:hover{
+transform:scale(1.2);
+}
+
+@keyframes slideDown{
+from{
+opacity:0;
+transform:translateY(-20px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes fadeUp{
+from{
+opacity:0;
+transform:translateY(25px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+@keyframes fillBar{
+from{
+width:0;
+}
+to{
+width:75%;
+}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+
+<div class="header">
+<h2>📝 Homework Manager</h2>
+<p>Track your daily tasks</p>
+</div>
+
+<div class="progress-card">
+
+<h3>📊 Weekly Progress</h3>
+
+<div class="progress-bar">
+<div class="progress"></div>
+</div>
+
+<p style="margin-top:10px;">75% Homework Completed</p>
+
+</div>
+
+<div class="homework-list">
+
+<div class="card">
+<div class="subject">📐 Mathematics</div>
+<p>Complete Exercise 5 Questions 1-20</p>
+<span class="status pending">Pending</span>
+</div>
+
+<div class="card">
+<div class="subject">⚛ Physics</div>
+<p>Numericals Chapter 3</p>
+<span class="status completed">Completed</span>
+</div>
+
+<div class="card">
+<div class="subject">🧪 Chemistry</div>
+<p>Learn Periodic Table Groups</p>
+<span class="status pending">Pending</span>
+</div>
+
+<div class="card">
+<div class="subject">📖 English</div>
+<p>Essay on Digital Education</p>
+<span class="status completed">Completed</span>
+</div>
+
+</div>
+
+<div class="bottom-nav">
+
+<div onclick="location.href='dashboard.html'">🏠</div>
+
+<div onclick="location.href='notices.html'">📢</div>
+
+<div>📝</div>
+
+<div onclick="location.href='profile.html'">👤</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
