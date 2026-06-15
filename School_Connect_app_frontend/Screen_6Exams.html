@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Exams</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #09131f, #0d1b2a, #13243d);
+        }
+
+        .phone {
+            width: 370px;
+            height: 760px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 35px;
+            padding: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff8c00, #ffb347);
+            padding: 18px;
+            border-radius: 20px;
+            color: black;
+            animation: slideDown .8s ease;
+        }
+
+        .countdown-card {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .circle {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            background: conic-gradient(#ffb347 0deg,
+                    #ff8c00 220deg,
+                    rgba(255, 255, 255, 0.1) 220deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: rotateIn 1.5s ease;
+        }
+
+        .inner {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: #0d1b2a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .days {
+            font-size: 40px;
+            font-weight: bold;
+            color: #ffb347;
+        }
+
+        .label {
+            font-size: 13px;
+            color: #ccc;
+        }
+
+        .exam-list {
+            margin-top: 20px;
+            height: 280px;
+            overflow-y: auto;
+        }
+
+        .exam {
+
+            background: rgba(255, 255, 255, 0.08);
+
+            padding: 18px;
+
+            border-radius: 18px;
+
+            margin-bottom: 15px;
+
+            transition: .3s;
+
+            animation: fadeUp .8s ease;
+
+        }
+
+        .exam:hover {
+
+            transform: translateY(-5px);
+
+            background: rgba(255, 255, 255, 0.15);
+
+        }
+
+        .subject {
+
+            font-size: 18px;
+
+            color: #ffb347;
+
+            font-weight: bold;
+
+        }
+
+        .date {
+
+            margin-top: 8px;
+
+            color: #ddd;
+
+        }
+
+        .bottom-nav {
+
+            position: absolute;
+
+            bottom: 20px;
+
+            left: 50%;
+
+            transform: translateX(-50%);
+
+            width: 320px;
+
+            display: flex;
+
+            justify-content: space-around;
+
+            padding: 15px;
+
+            border-radius: 20px;
+
+            background: rgba(255, 255, 255, 0.08);
+
+        }
+
+        .bottom-nav div {
+
+            font-size: 24px;
+
+            cursor: pointer;
+
+            transition: .3s;
+
+        }
+
+        .bottom-nav div:hover {
+
+            transform: scale(1.2);
+
+        }
+
+        @keyframes slideDown {
+
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes fadeUp {
+
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        @keyframes rotateIn {
+
+            from {
+                transform: scale(0.5) rotate(-180deg);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="phone">
+
+        <div class="header">
+
+            <h2>🎯 Exam Planner</h2>
+
+            <p>Stay focused. Stay prepared.</p>
+
+        </div>
+
+        <div class="countdown-card">
+
+            <div class="circle">
+
+                <div class="inner">
+
+                    <div class="days">15</div>
+
+                    <div class="label">Days Left</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="exam-list">
+
+            <div class="exam">
+
+                <div class="subject">
+                    📐 Mathematics
+                </div>
+
+                <div class="date">
+                    25 June 2026
+                </div>
+
+            </div>
+
+            <div class="exam">
+
+                <div class="subject">
+                    ⚛ Physics
+                </div>
+
+                <div class="date">
+                    27 June 2026
+                </div>
+
+            </div>
+
+            <div class="exam">
+
+                <div class="subject">
+                    🧪 Chemistry
+                </div>
+
+                <div class="date">
+                    30 June 2026
+                </div>
+
+            </div>
+
+            <div class="exam">
+
+                <div class="subject">
+                    📖 English
+                </div>
+
+                <div class="date">
+                    2 July 2026
+                </div>
+
+            </div>
+
+             <div class="exam">
+
+                <div class="subject">
+                    📖 Hindi
+                </div>
+
+                <div class="date">
+                    4 July 2026
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="bottom-nav">
+
+            <div onclick="location.href='dashboard.html'">
+                🏠
+            </div>
+
+            <div onclick="location.href='notices.html'">
+                📢
+            </div>
+
+            <div onclick="location.href='homework.html'">
+                📝
+            </div>
+
+            <div>
+                🎯
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
