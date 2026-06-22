@@ -1,59 +1,56 @@
-# 🎮 C++ Quiz Game
+ # 🎮 C++ Quiz Game
 
-A console-based quiz game built using C++ that tests basic programming knowledge through multiple-choice questions.
+An interactive console-based quiz application developed in C++ to test fundamental programming knowledge through multiple-choice questions. The project provides instant feedback, score tracking, and a user-friendly command-line experience.
 
 ## 🚀 Features
 
 * Multiple Choice Questions (MCQs)
-* Instant Answer Validation
-* Score Tracking System
-* Colored Console Output
-* Performance Feedback
-* Beginner Friendly Project
+* Real-Time Answer Validation
+* Dynamic Score Calculation
+* Colored Console Interface
+* Performance-Based Feedback
+* Beginner-Friendly Design
 * Interactive User Experience
 
-## 🛠️ Technologies Used
+## 🛠️ Tech Stack
 
 * C++
-* Object Oriented Programming Concepts
+* Standard Template Library (STL)
 * Functions
 * Conditional Statements
 * Loops
 * User Input Handling
-* Windows Console Color API (`windows.h`)
+* Windows Console API (`windows.h`)
 
-## 📋 Quiz Topics
+## 📚 Topics Covered
 
-The quiz currently covers:
+The quiz includes questions related to:
 
-* C++ Basics
+* C++ Fundamentals
 * Variables and Data Types
-* Input and Output
+* Input and Output Streams
 * Operators
 * Header Files
 * Constants
 * Scope Resolution Operator
 * Program Structure
 
-## 🎯 How It Works
+## 🎯 Project Workflow
 
-1. User starts the quiz.
-2. Multiple-choice questions are displayed.
-3. User enters an answer between 1 and 4.
-4. The program checks whether the answer is correct.
-5. Score is updated automatically.
-6. Final score and performance feedback are displayed.
+1. Launch the quiz application.
+2. Read the displayed question.
+3. Select an answer between **1–4**.
+4. Receive immediate feedback.
+5. Continue until all questions are completed.
+6. View the final score and performance result.
 
 ## 📊 Scoring System
 
-* Correct Answer → +1 Point
-* Wrong Answer → 0 Point
-
-Performance Levels in this Game:
-
-* 8/8 → Excellent! You are a C++ Pro!
-* 5–7 → Good Job! Keep Practicing.
-* Below 5 → More Practice Needed.
+| Score   | Performance                      |
+| ------- | -------------------------------- |
+| 8/8     | 🌟 Excellent! You are a C++ Pro! |
+| 5–7     | 👍 Good Job! Keep Practicing     |
+| Below 5 | 📖 More Practice Needed          |
 
 ## 📂 Project Structure
 
@@ -87,27 +84,33 @@ Your Score = 7 / 8
 Good Job! Keep Practicing.
 ```
 
-## 📚 Concepts Practiced
+## 🧠 Concepts Practiced
 
 * Functions
 * Conditional Statements
-* User Input
+* Loops
+* User Input Handling
 * Output Formatting
 * Score Management
 * Program Flow Control
 * Console Customization
+* Basic Software Design
 
-## 🔮 Future Improvements
+## 🔮 Future Enhancements
 
 * Random Question Generation
 * Question Bank Using Files
-* Timer Based Quiz
-* Difficulty Levels
+* Difficulty Levels (Easy, Medium, Hard)
+* Timer-Based Quiz Mode
+* High Score Tracking
 * Leaderboard System
-* Save Scores to File
+* Save & Load Scores
+* Topic-Wise Quizzes
 
 ## 👨‍💻 Author
 
 **Ansh Rastogi**
 
-Learning C++, Java, DSA and App Development while building projects and sharing the journey on GitHub.
+B.Tech CSE Student | Java Learner | DSA Enthusiast | Future App Developer
+
+Building projects, solving problems, and documenting the learning journey on GitHub.
