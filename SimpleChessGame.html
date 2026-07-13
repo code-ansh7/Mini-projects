@@ -1,0 +1,301 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Simple Chess — HTML/CSS/JS</title>
+  <style>
+    :root{
+      --light:#eee0c8; --dark:#b58863; --accent:#2563eb;
+      --board-size: min(90vmin, 650px);
+    }
+    body{
+      font-family: system-ui, Arial;
+      display:flex;
+      gap:20px;
+      padding:20px;
+      justify-content:center;
+      align-items:flex-start;
+      background:#f3f4f6;
+      color:#111827;
+    }
+    .wrap{display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap}/* Board */
+.board{
+  width:var(--board-size);
+  height:var(--board-size);
+  display:grid;
+  grid-template-columns:repeat(8,1fr);
+  border-radius:12px;
+  overflow:hidden;
+  background:#0001;
+  box-shadow:0 6px 20px rgba(0,0,0,0.25);
+}
+.cell{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:calc(var(--board-size)/9.5);
+  user-select:none;
+  cursor:pointer;
+  position:relative;
+  transition:background 0.15s ease-in-out;
+}
+.cell.light{background:var(--light)}
+.cell.dark{background:var(--dark)}
+
+/* Highlights */
+.cell.highlight{
+  outline:3px solid rgba(37,99,235,0.6);
+  outline-offset:-3px;
+}
+.cell.capture{
+  outline:3px solid rgba(220,38,38,0.55);
+  outline-offset:-3px;
+}
+
+/* Side Panel */
+.controls{width:300px; max-width:100%}
+.panel{
+  background:white;
+  padding:16px;
+  border-radius:10px;
+  box-shadow:0 3px 10px rgba(0,0,0,0.1);
+}
+h2{margin:0 0 8px 0; font-size:20px}
+button{
+  background:var(--accent);
+  border:none;
+  color:white;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-size:14px;
+  transition:0.2s;
+}
+button:hover{
+  opacity:0.85;
+}
+
+.moves{
+  max-height:280px;
+  overflow:auto;
+  font-family:monospace;
+  background:#f9fafb;
+  padding:8px;
+  border-radius:6px;
+  border:1px solid #e5e7eb;
+}
+
+@media(max-width:900px){
+  body{flex-direction:column; align-items:center}
+  .controls{width:100%}
+}
+
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div>
+      <div class="board" id="board" aria-label="Chessboard"></div>
+      <div style="margin-top:12px; display:flex; gap:8px; justify-content:center">
+        <button id="restart">Restart</button>
+        <button id="flip">Flip Board</button>
+        <button id="undo">Undo</button>
+      </div>
+    </div><div class="controls">
+  <div class="panel">
+    <h2>Simple Chess</h2>
+    <div class="info"><strong>Turn:</strong> <span id="turn">White</span></div>
+    <div class="info"><strong>Instructions:</strong> Click a piece to see its legal squares (basic rules). Click destination to move. Pawns promote to queen automatically (you'll be asked).</div>
+    <div style="margin-top:8px"><strong>Move list</strong></div>
+    <div class="moves" id="moves"></div>
+    <footer>Made with HTML/CSS/JS — basic move legality (no check/checkmate detection, no castling, no en passant)</footer>
+  </div>
+</div>
+
+  </div><script>
+// Simple chess implementation (no check/checkmate, no castling, no en passant)
+const boardEl = document.getElementById('board');
+const turnEl = document.getElementById('turn');
+const movesEl = document.getElementById('moves');
+let flipped = false;
+
+// Board representation: 8x8 array, rows 0..7 (rank 8..1)
+// pieces: uppercase for White, lowercase for Black
+// P N B R Q K / p n b r q k
+let board = [];
+let selected = null; // {r,c}
+let legalMoves = [];
+let history = [];
+let whiteToMove = true;
+
+const PIECE_UNICODE = {
+  'P':'♙','N':'♘','B':'♗','R':'♖','Q':'♕','K':'♔',
+  'p':'♟','n':'♞','b':'♝','r':'♜','q':'♛','k':'♚'
+};
+
+function startPosition(){
+  board = [
+    ['r','n','b','q','k','b','n','r'],
+    ['p','p','p','p','p','p','p','p'],
+    ['','','','','','','',''],
+    ['','','','','','','',''],
+    ['','','','','','','',''],
+    ['','','','','','','',''],
+    ['P','P','P','P','P','P','P','P'],
+    ['R','N','B','Q','K','B','N','R']
+  ];
+  selected = null; legalMoves = []; history = []; whiteToMove = true; updateStatus(); render();
+}
+
+function render(){
+  boardEl.innerHTML = '';
+  for(let r=0;r<8;r++){
+    for(let c=0;c<8;c++){
+      const cell = document.createElement('div');
+      cell.className = 'cell ' + (((r+c)%2)?'dark':'light');
+      const displayR = flipped? 7-r : r;
+      const displayC = flipped? 7-c : c;
+      cell.dataset.r = r; cell.dataset.c = c;
+      const piece = board[r][c];
+      if(piece){
+        const span = document.createElement('div');
+        span.textContent = PIECE_UNICODE[piece] || piece;
+        cell.appendChild(span);
+      }
+      // highlight legal
+      if(selected && selected.r==r && selected.c==c){
+        cell.classList.add('highlight');
+      }
+      const lm = legalMoves.find(m=>m.r==r&&m.c==c);
+      if(lm){
+        cell.classList.add(lm.capture? 'capture':'highlight');
+      }
+
+      cell.addEventListener('click', onCellClick);
+      boardEl.appendChild(cell);
+    }
+  }
+}
+
+function onCellClick(e){
+  const r = +e.currentTarget.dataset.r;
+  const c = +e.currentTarget.dataset.c;
+  const piece = board[r][c];
+
+  // if we have a move to this square
+  const move = legalMoves.find(m=>m.r==r&&m.c==c);
+  if(move){
+    makeMove(selected.r, selected.c, r, c);
+    selected = null; legalMoves = []; render(); return;
+  }
+
+  // otherwise select if piece and correct color
+  if(piece && isTurnPiece(piece)){
+    selected = {r,c};
+    legalMoves = generateMovesFor(r,c);
+  } else { selected = null; legalMoves = []; }
+  render();
+}
+
+function isTurnPiece(piece){
+  if(!piece) return false;
+  return whiteToMove ? piece===piece.toUpperCase() : piece===piece.toLowerCase();
+}
+
+function updateStatus(){
+  turnEl.textContent = whiteToMove? 'White':'Black';
+}
+
+function makeMove(r1,c1,r2,c2){
+  const from = board[r1][c1];
+  const to = board[r2][c2];
+  // record history (simple)
+  history.push({r1,c1,r2,c2,from,to,whiteToMove});
+  // move
+  board[r2][c2] = from;
+  board[r1][c1] = '';
+  // pawn promotion
+  if(board[r2][c2]==='P' && r2==0){
+    const choice = prompt('Promote pawn to (Q/R/B/N). Default Q:','Q') || 'Q';
+    const cch = choice.toUpperCase()[0];
+    board[r2][c2] = cch==='R'?'R':cch==='B'?'B':cch==='N'?'N':'Q';
+  }
+  if(board[r2][c2]==='p' && r2==7){
+    const choice = prompt('Promote pawn to (q/r/b/n). Default q:','q') || 'q';
+    const cch = choice.toLowerCase()[0];
+    board[r2][c2] = cch==='r'?'r':cch==='b'?'b':cch==='n'?'n':'q';
+  }
+  whiteToMove = !whiteToMove;
+  updateStatus();
+  updateMoveList(from, r1,c1, r2,c2, to);
+}
+
+function updateMoveList(piece, r1,c1, r2,c2, capture){
+  const san = squareName(r1,c1) + (capture? 'x' : '-') + squareName(r2,c2);
+  const li = document.createElement('div');
+  li.textContent = (whiteToMove? ((history.length+1)/2|0)+'. ' : '') + san + '  (' + piece + ')';
+  movesEl.prepend(li);
+}
+
+function squareName(r,c){ // r 0..7 -> rank 8..1
+  const file = String.fromCharCode('a'.charCodeAt(0)+c);
+  const rank = 8 - r;
+  return file+rank;
+}
+
+// Move generation (basic, ignores checks)
+function generateMovesFor(r,c){
+  const piece = board[r][c]; if(!piece) return [];
+  const isWhite = piece===piece.toUpperCase();
+  const moves = [];
+  const inBounds = (x,y)=> x>=0 && x<8 && y>=0 && y<8;
+  const addMove = (x,y,cap=false)=>{ if(!inBounds(x,y)) return; const target = board[x][y]; if(target==='') moves.push({r:x,c:y,capture:false}); else if((target===target.toUpperCase())!==isWhite) moves.push({r:x,c:y,capture:true}); };
+
+  const p = piece.toUpperCase();
+  if(p=='P'){
+    const dir = isWhite? -1:1;
+    const startRow = isWhite?6:1;
+    // forward
+    if(inBounds(r+dir,c) && board[r+dir][c]==='') moves.push({r:r+dir,c:c,capture:false});
+    // double
+    if(r===startRow && board[r+dir][c]==='' && board[r+2*dir][c]==='') moves.push({r:r+2*dir,c:c,capture:false});
+    // captures
+    for(const dc of [-1,1]){
+      const nr=r+dir, nc=c+dc;
+      if(inBounds(nr,nc)){
+        const t = board[nr][nc]; if(t!=='' && (t===t.toUpperCase())!==isWhite) moves.push({r:nr,c:nc,capture:true});
+      }
+    }
+  } else if(p=='N'){
+    const del = [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]];
+    del.forEach(d=>{ const nr=r+d[0], nc=c+d[1]; if(inBounds(nr,nc)){ const t=board[nr][nc]; if(t===''|| (t===t.toUpperCase())!==isWhite) moves.push({r:nr,c:nc,capture:t!==' '}); }});
+  } else if(p=='B' || p=='R' || p=='Q'){
+    const dirs = [];
+    if(p=='B' || p=='Q') dirs.push([-1,-1],[-1,1],[1,-1],[1,1]);
+    if(p=='R' || p=='Q') dirs.push([-1,0],[1,0],[0,-1],[0,1]);
+    dirs.forEach(d=>{
+      let nr=r+d[0], nc=c+d[1];
+      while(inBounds(nr,nc)){
+        const t = board[nr][nc];
+        if(t==='') { moves.push({r:nr,c:nc,capture:false}); nr+=d[0]; nc+=d[1]; continue; }
+        if((t===t.toUpperCase())!==isWhite) moves.push({r:nr,c:nc,capture:true});
+        break;
+      }
+    });
+  } else if(p=='K'){
+    for(let dr=-1;dr<=1;dr++) for(let dc=-1;dc<=1;dc++){ if(dr===0&&dc===0) continue; const nr=r+dr,nc=c+dc; if(inBounds(nr,nc)){ const t=board[nr][nc]; if(t===''|| (t===t.toUpperCase())!==isWhite) moves.push({r:nr,c:nc,capture:t!==''}); }}
+  }
+  // filter by color to move
+  return moves.filter(m=>{ const target = board[m.r][m.c]; return true; });
+}
+
+// UI controls
+document.getElementById('restart').addEventListener('click', ()=>startPosition());
+document.getElementById('flip').addEventListener('click', ()=>{flipped = !flipped; render();});
+document.getElementById('undo').addEventListener('click', ()=>{ if(history.length==0) return; const last = history.pop(); board[last.r1][last.c1] = last.from; board[last.r2][last.c2] = last.to; whiteToMove = last.whiteToMove; updateStatus(); render(); const firstChild = movesEl.firstChild; if(firstChild) movesEl.removeChild(firstChild); });
+
+startPosition();
+</script></body>
+</html>
