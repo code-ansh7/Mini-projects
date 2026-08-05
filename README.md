@@ -16,7 +16,7 @@ This repository showcases my learning journey through multiple hands-on projects
 
 🔗 GitHub: https://github.com/code-ansh7
 
-🔗 LinkedIn: https://www.linkedin.com/in/ansh-rastogi-6458a4381/
+🔗 LinkedIn: https://www.linkedin.com/in/ansh-rastogi-6458a4381/ 
 
 ---
 
