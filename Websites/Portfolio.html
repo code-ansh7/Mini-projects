@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ansh Rastogi | Flutter Developer Intern Portfolio</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#0284c7',
+                            600: '#0284c7',
+                            flutter: '#02569B',
+                            accent: '#38BDF8',
+                            cyan: '#06B6D4'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Space Grotesk', 'Inter', 'sans-serif'],
+                        mono: ['Fira Code', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: #030712;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030712;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0284c7;
+        }
+
+        /* Glassmorphism Styles */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .glass-card-hover:hover {
+            transform: translateY(-6px) scale(1.01);
+            border-color: rgba(56, 189, 248, 0.4);
+            box-shadow: 0 25px 50px -12px rgba(2, 132, 199, 0.25);
+        }
+
+        .glass-nav {
+            background: rgba(3, 7, 18, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Text Gradients */
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-text-flutter {
+            background: linear-gradient(135deg, #02569B 0%, #0175C2 50%, #13B9F6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-border {
+            position: relative;
+            border-radius: 1rem;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.3), rgba(129, 140, 248, 0.1), transparent);
+            padding: 1px;
+        }
+
+        /* Canvas setup */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content-layer {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Floating Badge Animation */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-float-delayed {
+            animation: float 7s ease-in-out 2s infinite;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white">
+
+    <!-- 3D Canvas Container -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Content Wrapper Layer -->
+    <div class="content-layer min-h-screen flex flex-col justify-between">
+
+        <!-- Navigation Bar -->
+        <header class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+                <a href="#hero" class="flex items-center space-x-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center font-bold text-xl text-white shadow-lg shadow-sky-500/30 group-hover:scale-105 transition-transform duration-300">
+                        AR
+                    </div>
+                    <span class="font-bold text-lg tracking-wide text-white group-hover:text-sky-400 transition-colors">
+                        Ansh<span class="text-sky-400">.dev</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Nav Navigation Links -->
+                <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-gray-300">
+                    <a href="#about" class="hover:text-sky-400 transition-colors py-1">About</a>
+                    <a href="#skills" class="hover:text-sky-400 transition-colors py-1">Skills</a>
+                    <a href="#projects" class="hover:text-sky-400 transition-colors py-1">Projects</a>
+                    <a href="#education" class="hover:text-sky-400 transition-colors py-1">Education</a>
+                    <a href="#contact" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-indigo-600 text-white font-semibold hover:shadow-lg hover:shadow-sky-500/25 hover:scale-105 active:scale-95 transition-all duration-300">
+                        Contact Me
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" aria-label="Toggle menu" class="text-gray-300 hover:text-white p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Navigation Menu -->
+            <div id="mobile-menu" class="hidden md:hidden glass-card border-b border-gray-800 px-4 pt-2 pb-6 space-y-3">
+                <a href="#about" class="block py-2 text-gray-300 hover:text-sky-400">About</a>
+                <a href="#skills" class="block py-2 text-gray-300 hover:text-sky-400">Skills</a>
+                <a href="#projects" class="block py-2 text-gray-300 hover:text-sky-400">Projects</a>
+                <a href="#education" class="block py-2 text-gray-300 hover:text-sky-400">Education</a>
+                <a href="#contact" class="block py-2.5 text-center rounded-xl bg-sky-500 text-white font-semibold">Contact Me</a>
+            </div>
+        </header>
+
+        <!-- Main Content Sections -->
+        <main class="flex-grow pt-20">
+
+            <!-- Hero Section -->
+            <section id="hero" class="min-h-[90vh] flex items-center justify-center relative px-4 sm:px-6 lg:px-8 py-12">
+                <div class="max-w-5xl mx-auto text-center space-y-8">
+                    
+                    <div class="inline-flex items-center space-x-2 px-4 py-2 rounded-full glass-card border border-sky-500/30 text-sky-400 text-xs sm:text-sm font-mono tracking-wide animate-pulse">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                        <span>Available for Flutter Developer Internships</span>
+                    </div>
+
+                    <h1 class="text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-none text-white">
+                        Hi, I'm <span class="gradient-text">Ansh Rastogi</span>
+                    </h1>
+
+                    <p class="text-xl sm:text-2xl text-sky-200/80 font-medium max-w-2xl mx-auto">
+                        Flutter Developer Intern & CS Undergraduate
+                    </p>
+
+                    <p class="text-base sm:text-lg text-gray-400 max-w-3xl mx-auto leading-relaxed">
+                        Crafting fluid mobile experiences with Dart & Flutter. Focused on building highly performant applications, clean UI design, robust REST API integrations, and practical OOP logic.
+                    </p>
+
+                    <div class="flex flex-wrap items-center justify-center gap-4 pt-4">
+                        <a href="#projects" class="px-8 py-3.5 rounded-xl bg-gradient-to-r from-sky-500 via-blue-600 to-indigo-600 text-white font-medium hover:shadow-xl hover:shadow-sky-500/30 hover:scale-105 active:scale-95 transition-all duration-300 flex items-center space-x-2">
+                            <span>Explore Projects</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </a>
+                        <a href="#contact" class="px-8 py-3.5 rounded-xl glass-card text-gray-200 hover:text-white hover:border-sky-500/50 hover:scale-105 active:scale-95 transition-all duration-300">
+                            Get In Touch
+                        </a>
+                    </div>
+
+                    <!-- Quick Contact Badges -->
+                    <div class="pt-8 flex flex-wrap justify-center gap-6 text-gray-400 text-sm">
+                        <span class="flex items-center space-x-2">
+                            <i class="fa-solid fa-location-dot text-sky-400"></i>
+                            <span>Shahjahanpur, UP, India</span>
+                        </span>
+                        <a href="tel:+919236920967" class="flex items-center space-x-2 hover:text-sky-400 transition-colors">
+                            <i class="fa-solid fa-phone text-sky-400"></i>
+                            <span>+91 9236920967</span>
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 hover:text-sky-400 transition-colors">
+                            <i class="fa-brands fa-github text-sky-400"></i>
+                            <span>GitHub</span>
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2 hover:text-sky-400 transition-colors">
+                            <i class="fa-brands fa-linkedin text-sky-400"></i>
+                            <span>LinkedIn</span>
+                        </a>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- Career Objective / About Section -->
+            <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-2">About <span class="gradient-text">Me</span></h2>
+                    <div class="w-16 h-1 bg-sky-500 mx-auto rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+                    <div class="md:col-span-7 glass-card p-8 rounded-3xl space-y-6 border border-gray-800">
+                        <div class="flex items-center space-x-3 text-sky-400">
+                            <i class="fa-solid fa-bullseye text-2xl"></i>
+                            <h3 class="text-xl font-semibold text-white">Career Objective</h3>
+                        </div>
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                            Seeking a <strong class="text-sky-400 font-semibold">Flutter Developer Internship</strong> to apply my Dart and Flutter skills, contribute to real-world mobile applications, and continue developing my software engineering and problem-solving abilities.
+                        </p>
+                        <p class="text-gray-400 text-base leading-relaxed">
+                            With a strong foundation in Object-Oriented Programming (OOP) using Java, combined with modern cross-platform mobile UI development in Flutter, I focus on constructing intuitive, functional, and user-centered digital solutions.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 pt-4 border-t border-gray-800/60">
+                            <div>
+                                <span class="block text-gray-500 text-xs font-mono uppercase">Primary Focus</span>
+                                <span class="text-white font-medium">Flutter Mobile UI & Logic</span>
+                            </div>
+                            <div>
+                                <span class="block text-gray-500 text-xs font-mono uppercase">Status</span>
+                                <span class="text-emerald-400 font-medium">Pursuing B.Tech CSE (2027)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="md:col-span-5 grid grid-cols-1 gap-4">
+                        <div class="glass-card p-6 rounded-2xl border border-gray-800/80 flex items-start space-x-4">
+                            <div class="p-3 bg-sky-500/10 rounded-xl text-sky-400">
+                                <i class="fa-mobile-screen-button text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Mobile Architecture</h4>
+                                <p class="text-gray-400 text-sm">Widgets, Forms, Custom Navigation, and State Integration.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-2xl border border-gray-800/80 flex items-start space-x-4">
+                            <div class="p-3 bg-indigo-500/10 rounded-xl text-indigo-400">
+                                <i class="fa-solid fa-plug text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">REST API Integration</h4>
+                                <p class="text-gray-400 text-sm">Fetching and rendering dynamic real-time data efficiently.</p>
+                            </div>
+                        </div>
+
+                        <div class="glass-card p-6 rounded-2xl border border-gray-800/80 flex items-start space-x-4">
+                            <div class="p-3 bg-purple-500/10 rounded-xl text-purple-400">
+                                <i class="fa-solid fa-code text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-white font-bold mb-1">Core Java & OOP</h4>
+                                <p class="text-gray-400 text-sm">File Handling, Exception Handling, and Data Processing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Technical Skills Section -->
+            <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-2">Technical <span class="gradient-text">Skills</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Core technologies and frameworks I work with</p>
+                    <div class="w-16 h-1 bg-sky-500 mx-auto rounded-full mt-3"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Mobile Development -->
+                    <div class="glass-card p-6 rounded-2xl border border-gray-800 glass-card-hover space-y-4">
+                        <div class="flex items-center space-x-3 text-sky-400">
+                            <i class="fa-solid fa-layer-group text-2xl"></i>
+                            <h3 class="text-xl font-bold text-white">Flutter & Mobile</h3>
+                        </div>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>Flutter Framework</span>
+                                <span class="text-xs px-2 py-1 rounded bg-sky-500/20 text-sky-300 font-mono">Advanced</span>
+                            </li>
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>Dart Language</span>
+                                <span class="text-xs px-2 py-1 rounded bg-sky-500/20 text-sky-300 font-mono">Primary</span>
+                            </li>
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>REST API Integration</span>
+                                <span class="text-xs px-2 py-1 rounded bg-sky-500/20 text-sky-300 font-mono">Proficient</span>
+                            </li>
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>Mobile UI / Custom Widgets</span>
+                                <span class="text-xs px-2 py-1 rounded bg-sky-500/20 text-sky-300 font-mono">Proficient</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Languages -->
+                    <div class="glass-card p-6 rounded-2xl border border-gray-800 glass-card-hover space-y-4">
+                        <div class="flex items-center space-x-3 text-indigo-400">
+                            <i class="fa-solid fa-laptop-code text-2xl"></i>
+                            <h3 class="text-xl font-bold text-white">Languages</h3>
+                        </div>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>Dart</span>
+                                <span class="text-xs px-2 py-1 rounded bg-indigo-500/20 text-indigo-300 font-mono">Primary</span>
+                            </li>
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>Java</span>
+                                <span class="text-xs px-2 py-1 rounded bg-indigo-500/20 text-indigo-300 font-mono">Primary</span>
+                            </li>
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>C / C++</span>
+                                <span class="text-xs px-2 py-1 rounded bg-gray-700/50 text-gray-300 font-mono">Basic</span>
+                            </li>
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>Python</span>
+                                <span class="text-xs px-2 py-1 rounded bg-gray-700/50 text-gray-300 font-mono">Basic</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Web & Java Fundamentals -->
+                    <div class="glass-card p-6 rounded-2xl border border-gray-800 glass-card-hover space-y-4">
+                        <div class="flex items-center space-x-3 text-purple-400">
+                            <i class="fa-solid fa-gears text-2xl"></i>
+                            <h3 class="text-xl font-bold text-white">Core Concepts & Web</h3>
+                        </div>
+                        <ul class="space-y-2 text-gray-300 text-sm">
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>Object-Oriented Programming</span>
+                                <span class="text-xs px-2 py-1 rounded bg-purple-500/20 text-purple-300 font-mono">Core</span>
+                            </li>
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>File & Exception Handling</span>
+                                <span class="text-xs px-2 py-1 rounded bg-purple-500/20 text-purple-300 font-mono">Core</span>
+                            </li>
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>HTML5 / CSS3 / JavaScript</span>
+                                <span class="text-xs px-2 py-1 rounded bg-purple-500/20 text-purple-300 font-mono">Exposure</span>
+                            </li>
+                            <li class="flex items-center justify-between p-2 rounded-lg bg-gray-900/40">
+                                <span>Input Validation</span>
+                                <span class="text-xs px-2 py-1 rounded bg-purple-500/20 text-purple-300 font-mono">Core</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <!-- Tools & Badges -->
+                <div class="mt-12 glass-card p-6 rounded-2xl border border-gray-800 flex flex-wrap items-center justify-between gap-4">
+                    <span class="text-gray-400 font-mono text-sm uppercase tracking-wider">Tools & Workflow:</span>
+                    <div class="flex flex-wrap gap-3">
+                        <span class="px-4 py-2 rounded-xl bg-gray-800/80 text-sky-400 font-mono text-sm border border-gray-700/50 flex items-center gap-2">
+                            <i class="fa-brands fa-git-alt text-amber-500"></i> Git
+                        </span>
+                        <span class="px-4 py-2 rounded-xl bg-gray-800/80 text-sky-400 font-mono text-sm border border-gray-700/50 flex items-center gap-2">
+                            <i class="fa-brands fa-github text-white"></i> GitHub
+                        </span>
+                        <span class="px-4 py-2 rounded-xl bg-gray-800/80 text-sky-400 font-mono text-sm border border-gray-700/50 flex items-center gap-2">
+                            <i class="fa-solid fa-code text-blue-400"></i> VS Code
+                        </span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section with Filter -->
+            <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-2">Featured <span class="gradient-text">Projects</span></h2>
+                    <p class="text-gray-400 text-sm sm:text-base">Select a technology filter to sort through my work</p>
+                    <div class="w-16 h-1 bg-sky-500 mx-auto rounded-full mt-3 mb-8"></div>
+
+                    <!-- Filter Buttons -->
+                    <div class="flex flex-wrap justify-center gap-3">
+                        <button onclick="filterProjects('all')" class="project-filter-btn px-5 py-2 rounded-xl font-medium text-sm transition-all duration-300 bg-sky-500 text-white shadow-lg shadow-sky-500/20" data-filter="all">
+                            All Projects
+                        </button>
+                        <button onclick="filterProjects('flutter')" class="project-filter-btn px-5 py-2 rounded-xl font-medium text-sm transition-all duration-300 glass-card text-gray-300 hover:text-white" data-filter="flutter">
+                            Flutter / Dart
+                        </button>
+                        <button onclick="filterProjects('java')" class="project-filter-btn px-5 py-2 rounded-xl font-medium text-sm transition-all duration-300 glass-card text-gray-300 hover:text-white" data-filter="java">
+                            Java Console Apps
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Projects Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Project 1: Weatherly -->
+                    <div class="project-card glass-card rounded-2xl overflow-hidden border border-gray-800 glass-card-hover flex flex-col justify-between" data-category="flutter">
+                        <div class="p-6 space-y-4">
+                            <div class="flex items-center justify-between">
+                                <div class="w-12 h-12 rounded-xl bg-sky-500/20 text-sky-400 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-cloud-sun"></i>
+                                </div>
+                                <span class="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 text-xs font-mono border border-sky-500/20">Flutter</span>
+                            </div>
+             
